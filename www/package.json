@@ -1,0 +1,14 @@
+{
+  "name": "www",
+  "version": "1.0.0",
+  "description": "diary website",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "Roman Artyshevskyy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

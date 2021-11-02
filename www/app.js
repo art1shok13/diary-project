@@ -7,10 +7,9 @@ app.get('/', (req, res)=>{
 })
 
 app.post('/api/marks', (req, res)=>{
-    res.send('HELLO WORLD!')
 })
 
-const port = 3000
+const port = 5000
 async function init(){
     try {
         app.listen(port, ()=>{

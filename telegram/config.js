@@ -14,7 +14,7 @@ const subjects_markup = [
 
 const amarktypes_markup = [
     [{text:'Робота на уроці', callback_data:'0'}],
-    [{text:'контрольна робота', callback_data:'1'}],
+    [{text:'Контрольна робота', callback_data:'1'}],
     [{text:'Домашня робота', callback_data:'2'}],
 ]
 

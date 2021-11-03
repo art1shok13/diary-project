@@ -35,7 +35,7 @@ const schedule = [
 ]
 
 const dateParser = (date)=>{
-    return `${new Date(date).getDate()}-${new Date(date).getMonth()+1}-${new Date(date).getFullYear()}`
+    return `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
 }
 
 module.exports = {bot_token, subjects, subjects_markup, amarktypes_markup, schedule, week, dateParser}

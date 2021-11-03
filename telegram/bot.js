@@ -1,6 +1,22 @@
 const { Telegraf, session, Scenes: { WizardScene, Stage }, Markup } = require('telegraf')
 const {subjects, subjects_markup, amarktypes_markup, bot_token, schedule, week, dateParser} = require('./config')
 
+const mysql = require("mysql2")
+  
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  database: "diary_db"
+})
+
+connection.connect(function(err){
+    if (err) {
+      return console.error("Error: " + err.message)
+    }
+    else{
+      console.log("SQL connection READY")
+    }
+ })
 //===========================================================================================================================
 const aMarkSubject = Telegraf.on('callback_query', async ctx => {
 
@@ -67,8 +83,12 @@ const aMarkSpecial = Telegraf.on('text', async ctx => {
 
 const aMarkSql = async ( ctx, data ) => {
     console.log(data)
-    await ctx.reply('Mark added')
-    return ctx.scene.leave()
+    const {subject, mark, date, name, type} = data
+    connection.query(`INSERT INTO marks (subject_id, mark, date_from, type, name) VALUES (${subject}, ${mark}, '${dateParser(date)}', ${type}, '${name}');`, async (err, result, fields) => {
+        console.log(result)
+        await ctx.reply('Task added')
+        return ctx.scene.leave()
+    })
 }
 
 const aMarkScene = new WizardScene('aMarkScene', aMarkSubject, aMarkMark, aMarkType, aMarkName, aMarkDate, aMarkSpecial)
@@ -119,9 +139,12 @@ const aTaskSpecial= Telegraf.on('', async ctx => {
 })
 
 const aTaskSql = async (ctx,data) => {
-    console.log(data)
-    await ctx.reply('Task added')
-    return ctx.scene.leave()
+    const {subject, task, date} = data
+    connection.query(`INSERT INTO tasks (subject_id, task, date_from, date_to) VALUES (${subject}, '${task}', '${dateParser(new Date())}', '${date}');`, async (err, result, fields) => {
+        console.log(result)
+        await ctx.reply('Task added')
+        return ctx.scene.leave()
+    })
 }
 
 const aTaskScene = new WizardScene('aTaskScene', aTaskSubject, aTaskTask, aTaskDate, aTaskSpecial)

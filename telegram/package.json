@@ -9,6 +9,7 @@
   "author": "Roman Artyshevskyy",
   "license": "ISC",
   "dependencies": {
+    "mysql2": "^2.3.2",
     "telegraf": "^4.4.2"
   }
 }

@@ -34,17 +34,21 @@ api.get('/mark-types', (req, res)=>{
 // /api/marks
 api.post('/marks', (req, res)=>{
     req.body.params = JSON.parse(req.body.params)
-    connection.query(`SELECT * FROM marks`, async (err, result, fields)=>{
-        let filtered=result
-        await filtered.map((item)=>{
-            item.date_from=new Date(item.date_from).getMonth()
-            return item
-        })
+    connection.query('SELECT * FROM marks ORDER BY `marks`.`date_from` ASC', async (err, result, fields)=>{
+        const results = result
+        let filtered = result
+
         await Object.entries(req.body.params).forEach(([param_id])=>{
             filtered = filtered.filter( (item) => {
-                for(parameter of req.body.params[param_id]){
-                    if(item[param_id]==parameter){
-                        return true
+                for(parameter of req.body.params[param_id]){ 
+                    if(param_id!='date_from'){
+                        if(item[param_id]==parameter){
+                            return true
+                        }
+                    }else{
+                        if(new Date(item[param_id]).getMonth()==parameter){
+                            return true
+                        }
                     }
                 }
                 return false  

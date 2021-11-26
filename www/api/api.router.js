@@ -35,9 +35,8 @@ api.get('/mark-types', (req, res)=>{
 api.post('/marks', (req, res)=>{
     req.body.params = JSON.parse(req.body.params)
     connection.query('SELECT * FROM marks ORDER BY `marks`.`date_from` ASC', async (err, result, fields)=>{
-        const results = result
         let filtered = result
-
+        console.log(result)
         await Object.entries(req.body.params).forEach(([param_id])=>{
             filtered = filtered.filter( (item) => {
                 for(parameter of req.body.params[param_id]){ 

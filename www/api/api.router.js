@@ -33,10 +33,10 @@ api.get('/mark-types', (req, res)=>{
 
 // /api/marks
 api.post('/marks', (req, res)=>{
-    req.body.params = JSON.parse(req.body.params)
+
     connection.query('SELECT * FROM marks ORDER BY `marks`.`date_from` ASC', async (err, result, fields)=>{
         let filtered = result
-        console.log(result)
+
         await Object.entries(req.body.params).forEach(([param_id])=>{
             filtered = filtered.filter( (item) => {
                 for(parameter of req.body.params[param_id]){ 
@@ -59,9 +59,9 @@ api.post('/marks', (req, res)=>{
 
 // /api/tasks
 api.post('/tasks', (req, res)=>{
-    req.body.params = JSON.parse(req.body.params)
     connection.query('SELECT * FROM `tasks` ORDER BY `tasks`.`date_to` DESC', async (err, result, fields)=>{
         let filtered=result
+
         await Object.entries(req.body.params).forEach(([param_id])=>{
             filtered = filtered.filter( (item) => {
                 for(parameter of req.body.params[param_id]){
@@ -81,6 +81,12 @@ api.post('/tasks', (req, res)=>{
             }
         })
         res.status(200).send(filtered)
+    })
+})
+
+api.post('/check-task', (req,res) => {
+    connection.query(`UPDATE tasks SET checked = ${Number(req.body.checked)} WHERE id = ${req.body.id};`, async (err, result, fields)=>{
+        res.send(result)
     })
 })
 

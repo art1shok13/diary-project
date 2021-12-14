@@ -1,4 +1,3 @@
 /telegram/node_modules
 /www/node_modules
-/www/client/node_modules
-/images
+/www/public/images/*.png

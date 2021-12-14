@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Marks
+    body
+        include ../includes/nav.pug
+
+        #body 
+            main 
+                table
+                    thead 
+                        tr
+                            th Id 
+                            th Subject
+                            th Mark
+                            th Date from
+                            th Type
+                            th Name
+                    tbody
+            .parameters
+                ul
+                    li
+                        ul.subjectsPlist Subjects
+                    li
+                        ul.monthsPlist Months
+                    li
+                        ul.typesPlist Types
+            div(style="width:32em;")
+                canvas(id="myChart" width="400" height="400")
+        script(src="./js/marks.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js")

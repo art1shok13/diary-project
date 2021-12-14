@@ -124,7 +124,7 @@ const aTaskSubject = Telegraf.on('callback_query', async ctx => {
 
 const aTaskTask = Telegraf.on('text', async ctx => {
     ctx.session.aTaskScene.task = String(ctx.update.message.text)
-    ctx.reply('Add photo(s)?',Markup.keyboard([[{text:'No photo'}]]).oneTime())
+    ctx.reply('Add photo?',Markup.keyboard([[{text:'No photo'}]]).oneTime())
     return ctx.wizard.next()
 })
 
@@ -149,10 +149,10 @@ const aTaskImg = Telegraf.on('message', async ctx => {
         const photo = `${bot_url}getFile?file_id=${id}`
         needle.get(photo, async (err, res, body) => {
             needle.get(`https://api.telegram.org/file/bot${bot_token}/${body.result.file_path}`)
-                .pipe(fs.createWriteStream(`../images/${id}.png`))
+                .pipe(fs.createWriteStream(`../www/public/images/${id}.png`))
                 .on('done', async (err)=>{
                     ctx.session.aTaskScene.image = String(id)
-                    await ctx.reply('Photos added', Markup.removeKeyboard())
+                    await ctx.reply('Photo added', Markup.removeKeyboard())
                     await ctx.reply('Date:', Markup.inlineKeyboard(markupf()))
                 })
         })
@@ -164,6 +164,7 @@ const aTaskImg = Telegraf.on('message', async ctx => {
 
     return ctx.wizard.next()
 })
+
 const aTaskDate = Telegraf.on('callback_query', async ctx => {
     if(ctx.update.callback_query.data!='$'){
         ctx.session.aTaskScene.date = dateParser(ctx.update.callback_query.data)
